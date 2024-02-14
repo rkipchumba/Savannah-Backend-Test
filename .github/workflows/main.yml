@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      POSTGRES_USER: rodgers
-      # POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_HOST: localhost 
       POSTGRES_DB: rodgers
       POSTGRES_PORT: 5432
@@ -23,7 +23,7 @@ jobs:
         image: postgres:12
         env:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
-          # POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ env.POSTGRES_DB }}
         ports:
           - 5432:5432
