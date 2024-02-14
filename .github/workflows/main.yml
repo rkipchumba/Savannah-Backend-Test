@@ -29,7 +29,19 @@ jobs:
         coverage run --source=customers_orders manage.py test
         coverage report
 
-    - name: Check PostgreSQL version
-      run: psql --version
+    - name: Set up PostgreSQL
+      uses: edbizarro/postgresql-action@v2
+      with:
+        postgresql-version: '14'
+        postgresql-database: 'rodgers'
+        postgresql-username: 'rodgers'
+        postgresql-password: ''
+        postgresql-port: '5432'
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+
+
 
 
