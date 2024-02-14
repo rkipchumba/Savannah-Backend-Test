@@ -74,19 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'savannah_task.wsgi.application'
 
-DB_USERNAME=os.environ.get("rodgers")
-DB_PASSWORD=os.environ.get("")
-DB_HOST=os.environ.get("localhost")
-DB_PORT=os.environ.get("5432")
-DB_DATABASE=os.environ.get("rodgers")
-DATABASES = all([
-        DB_USERNAME, 
-        DB_PASSWORD, 
-        DB_HOST,
-        DB_PORT,
-        DB_DATABASE
-])
-
 
 # Database
 DATABASES = {
