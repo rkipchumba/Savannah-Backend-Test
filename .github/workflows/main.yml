@@ -30,7 +30,7 @@ jobs:
         coverage report
 
     - name: Set up PostgreSQL
-      uses: edbizarro/postgresql-action@v2
+      uses: postgresql/actions/setup-postgres@v2
       with:
         postgresql-version: '14'
         postgresql-database: 'rodgers'
