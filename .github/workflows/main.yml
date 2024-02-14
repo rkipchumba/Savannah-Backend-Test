@@ -12,8 +12,7 @@ jobs:
 
     env:
       env:
-        
-        POSTGRES_USER: rodgers
+        POSTGRES_USER: postgres
         POSTGRES_PASSWORD: ''
         POSTGRES_HOST: localhost 
         POSTGRES_DB: rodgers
