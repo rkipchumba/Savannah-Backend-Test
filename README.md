@@ -46,11 +46,33 @@ Set up the Google OAuth2 credentials in your project's settings
 python manage.py runserver
 ```
 
+- Access the Application
+```
+http://127.0.0.1:8000/
+```
+- Testing
+```
+python manage.py test
+```
+
+
 
 
 ## API Endpoints
-
-List and describe my API endpoints.
+- Create a New Customer
+Method: POST
+Endpoint: http://127.0.0.1:8000/api/customers/
+```
+Request Body: JSON object with customer details
+Headers: [{"key":"Content-Type","value":"application/json"]
+sample Body
+{
+  "customer": 1,
+  "item": "Spoon",
+  "amount": 50.00,
+  "time": "2024-02-12T12:00:00Z"
+}
+```
 
 ## Authentication and Authorization
 
