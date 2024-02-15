@@ -59,7 +59,7 @@ python manage.py test
 
 
 ## API Endpoints
-- Create a New Customer
+### Create a New Customer
 - Method: POST
 - Endpoint: http://127.0.0.1:8000/api/customers/
 ```
