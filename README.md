@@ -63,9 +63,9 @@ For a nicer presentation, use `coverage html` Then open htmlcov/index.html in yo
 
 
 ## API Endpoints
-### Create a New Customer
+### Create a New Order
 - Method: POST
-- Endpoint: http://127.0.0.1:8000/api/customers/
+- Endpoint: http://127.0.0.1:8000/api/orders/
 ```
 Request Body: JSON object with customer details
 Headers: [{"key":"Content-Type","value":"application/json"]
@@ -77,9 +77,9 @@ sample Body
   "time": "2024-02-12T12:00:00Z"
 }
 ```
-### Create a New Order
+### Create a New Customer
 - Method: POST
-- Endpoint: http://127.0.0.1:8000/api/orders/
+- Endpoint: http://127.0.0.1:8000/api/Customers/
 ```
 Request Body: JSON object with order details
 Headers: [{"key":"Content-Type","value":"application/json"]
@@ -107,18 +107,21 @@ sample Body
 - Method: GET
 - Endpoint: http://127.0.0.1:8000/api/<order_id>/
 
-
-
-## Authentication and Authorization
-
-Explain how authentication and authorization work in my project.
-
 ## SMS Integration
 
  When an order is added, the customer receives an SMS alerting them they
  have placed an order from M-Savannah (custom sender ID ).
  I used the Africa’s Talking SMS gateway and sandbox. Set up USERNAME and API_KEY
 `https://developers.africastalking.com/`
+
+![Sample SMS Response in Africa’s Talking Simulator ](customers_orders/img/sms_test.png)
+
+
+
+## Authentication and Authorization
+
+Explain how authentication and authorization work in my project.
+
 
 ## CI/CD Pipeline
 

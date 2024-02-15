@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
-import africastalking 
+from rest_framework import serializers, viewsets, status
+from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
 from django.conf import settings
 from django.utils.html import escape
+import africastalking
 
-from rest_framework import serializers, viewsets
 from .models import Customer, Order
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -22,20 +24,22 @@ class CustomerViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerSerializer
     # permission_classes = [IsAuthenticated]
 
+    def create(self, request, *args, **kwargs):
+        # Check if the provided code already exists
+        code = request.data.get('code')
+        existing_customer = Customer.objects.filter(code=code).first()
+
+        if existing_customer:
+            error_message = f"Customer with the code '{code}' already exists."
+            raise ValidationError({"code": [error_message]})
+
+        # Continue with the normal creation process
+        return super().create(request, *args, **kwargs)
+
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     # permission_classes = [IsAuthenticated]
-
-    def perform_destroy(self, instance):
-        try:
-            print("Deleting order...")
-            instance.delete()
-            print("Order deleted successfully.")
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except Exception as e:
-            print(f"Error deleting order: {e}")
-            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
     def perform_create(self, serializer):
@@ -44,7 +48,8 @@ class OrderViewSet(viewsets.ModelViewSet):
         # Send SMS alert
         order = serializer.instance
         customer = order.customer
-        message = f"Dear {customer.name}, your order with item {order.item} has been added successfully. Total amount is {order.amount}"
+        order_time = order.time.strftime('%Y-%m-%d %H:%M')
+        message = f"Dear {customer.name}, your order with item {order.item} has been added successfully on {order_time}. Total amount is {order.amount}."
         self.send_sms(customer.code, message)
 
     def send_sms(self, phone_number, message):
