@@ -60,8 +60,8 @@ python manage.py test
 
 ## API Endpoints
 - Create a New Customer
-Method: POST
-Endpoint: http://127.0.0.1:8000/api/customers/
+- Method: POST
+- Endpoint: http://127.0.0.1:8000/api/customers/
 ```
 Request Body: JSON object with customer details
 Headers: [{"key":"Content-Type","value":"application/json"]
