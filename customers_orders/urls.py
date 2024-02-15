@@ -8,5 +8,6 @@ router.register(r'orders', OrderViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path(r'^auth/', include('social_django.urls', namespace='social'))
+    path('auth/', include('social_django.urls', namespace='social')),
+
 ]

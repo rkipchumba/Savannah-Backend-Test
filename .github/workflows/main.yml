@@ -11,16 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      POSTGRES_USER: postgres
+      POSTGRES_USER: rodgers
       POSTGRES_PASSWORD: password
       POSTGRES_HOST: localhost 
-      POSTGRES_DB: postgres
+      POSTGRES_DB: rodgers
       POSTGRES_PORT: 5432
-      DJANGO_SECRET_KEY: test-key-not-good
 
     services:
       postgres_main:
-        image: postgres:12
+        image: postgres
         env:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
