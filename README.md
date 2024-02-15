@@ -51,9 +51,13 @@ python manage.py runserver
 http://127.0.0.1:8000/
 ```
 - Testing
+Django's testing framework that makes it easy to create and 
+run tests was implemented. 
+The coverage package is used to measure code coverage
 ```
 python manage.py test
 ```
+For a nicer presentation, use `coverage html` Then open htmlcov/index.html in your browser, to see a report.
 
 
 
@@ -73,6 +77,37 @@ sample Body
   "time": "2024-02-12T12:00:00Z"
 }
 ```
+### Create a New Order
+- Method: POST
+- Endpoint: http://127.0.0.1:8000/api/orders/
+```
+Request Body: JSON object with order details
+Headers: [{"key":"Content-Type","value":"application/json"]
+sample Body
+{
+  "name": "John Doe",
+  "code": "JD001"
+}
+```
+
+
+### Retrieve List of Customers
+- Method: GET
+- Endpoint: http://127.0.0.1:8000/api/customers/
+
+### Retrieve List of Orders
+- Method: GET
+- Endpoint: http://127.0.0.1:8000/api/orders/
+
+### Retrieve Single Customer
+- Method: GET
+- Endpoint: http://127.0.0.1:8000/api/<customer_id>/
+
+### Retrieve Single Order 
+- Method: GET
+- Endpoint: http://127.0.0.1:8000/api/<order_id>/
+
+
 
 ## Authentication and Authorization
 
@@ -80,15 +115,17 @@ Explain how authentication and authorization work in my project.
 
 ## SMS Integration
 
-Details on how SMS integration with Africa’s Talking works.
-
-## Testing
-
-Information on the testing strategy and how to run tests.
+ When an order is added, the customer receives an SMS alerting them they
+ have placed an order from M-Savannah (custom sender ID ).
+ I used the Africa’s Talking SMS gateway and sandbox. Set up USERNAME and API_KEY
+`https://developers.africastalking.com/`
 
 ## CI/CD Pipeline
 
-Overview of the CI/CD workflow using GitHub Actions.
+The projects uses  GitHub Actions workflow for simplicity. The workflow 
+ensures that the project can be successfully built and that tests are executed, 
+providing coverage information. The PostgreSQL service is used in the CI 
+process, and health checks ensures its availability during the workflow
 
 ## Web Security 
 

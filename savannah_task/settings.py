@@ -90,7 +90,7 @@ DATABASES = {
 
 
 
-
+# Africas Talking Gateway
 USERNAME = 'sandbox'
 API_KEY = 'e68a6ba30bff8ea7204421b6f805d0c44d0ebb957e966c8d812be5085aa377d3'
 

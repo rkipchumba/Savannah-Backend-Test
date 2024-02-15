@@ -27,6 +27,17 @@ class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
     # permission_classes = [IsAuthenticated]
 
+    def perform_destroy(self, instance):
+        try:
+            print("Deleting order...")
+            instance.delete()
+            print("Order deleted successfully.")
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            print(f"Error deleting order: {e}")
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
     def perform_create(self, serializer):
         super().perform_create(serializer)
         
@@ -40,7 +51,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         africastalking.initialize(settings.USERNAME, settings.API_KEY)
         sms = africastalking.SMS 
 
-        recipients = [f"+{254728521615}"]
+        recipients = [f"+{254728521615}"] 
         sender = 'M-Savannah' 
         escaped_message = escape(message)  # encode data before being rendered in the HTML
         response = sms.send(message, recipients, sender)
