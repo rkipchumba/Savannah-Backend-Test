@@ -1,6 +1,5 @@
 # Project Description
-Django-based RESTful API with OpenID Connect Authentication. 
-Designed a simple customers and orders database management.
+Django RESTful API featuring OpenID Connect Authentication. Developed a database management system for customers and orders. Users to seamlessly create customers, obtain unique customer IDs, and initiate order creation. Customers can effortlessly place orders and receive instant confirmation messages, ensuring a smooth and efficient process.
 
 ## Technologies Used
 - Framework: Python Django with Django Rest Framework
