@@ -46,9 +46,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Set up environment variables
+        run: |
+          echo "export DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> $GITHUB_ENV
+          echo "export AFRICASTAKING_USERNAME=${{ secrets.AFRICASTAKING_USERNAME }}" >> $GITHUB_ENV
+          echo "export AFRICASTAKING_API_KEY=${{ secrets.AFRICASTAKING_API_KEY }}" >> $GITHUB_ENV
+          echo "export OKTA_DOMAIN=${{ secrets.OKTA_DOMAIN }}" >> $GITHUB_ENV
+          echo "export OIDC_RP_CLIENT_ID=${{ secrets.OIDC_RP_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "export OIDC_RP_CLIENT_SECRET=${{ secrets.OIDC_RP_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "export DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
+          echo "export DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "export DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+          echo "export DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+
       - name: Run tests and coverage
         run: |
-          source .env || true 
+          source $GITHUB_ENV || true
           coverage run --source=customers_orders manage.py test
           coverage report
-
