@@ -65,7 +65,7 @@ For a nicer presentation, use `coverage html` Then open htmlcov/index.html in yo
 
 ### Create a New Customer
 - Method: POST
-- Endpoint: http://127.0.0.1:8000/api/Customers/
+- Endpoint: http://127.0.0.1:8000/api/customers/
 ```
 Request Body: JSON object with order details
 Headers: [{"key":"Content-Type","value":"application/json"]
