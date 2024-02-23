@@ -1,17 +1,22 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .models import Customer, Order
 from django.urls import reverse
 from rest_framework import status
 
+User = get_user_model()
 
 class OrderAPITestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(username='testuser', password='testpassword')
         self.client.force_authenticate(user=self.user)
-        self.customer = Customer.objects.create(name='Test Customer', code='TC001')
+        self.customer = Customer.objects.create(
+            name='Test Customer',
+            code='TC001',
+            phone_number='+254712345678'
+        )
         self.order_data = {
             'customer': self.customer.id,
             'item': 'Test Item',
@@ -69,7 +74,13 @@ class OrderModelTest(TestCase):
 class OrderAcceptanceTest(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.customer = Customer.objects.create(name='Test Customer', code='TC001')
+        self.customer = Customer.objects.create(
+            name='Test Customer',
+            code='TC001',
+            phone_number='+254712345678'
+        )
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.force_authenticate(user=self.user)
 
     def test_create_order_view(self):
         url = reverse('order-list')
@@ -81,7 +92,13 @@ class OrderAcceptanceTest(TestCase):
 class OrderViewSetIntegrationTest(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.customer = Customer.objects.create(name='Test Customer', code='TC001')
+        self.customer = Customer.objects.create(
+            name='Test Customer',
+            code='TC001',
+            phone_number='+254712345678'
+        )
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.force_authenticate(user=self.user)
 
     def test_create_order_api_view(self):
         url = reverse('order-list')

@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+
 from .views import CustomerViewSet, OrderViewSet
 
 router = DefaultRouter()
@@ -7,7 +8,6 @@ router.register(r'customers', CustomerViewSet)
 router.register(r'orders', OrderViewSet, basename='order')
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('auth/', include('social_django.urls', namespace='social')),
+    path('', include(router.urls)),    
 
 ]

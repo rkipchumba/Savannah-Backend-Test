@@ -4,7 +4,7 @@ Django RESTful API featuring OpenID Connect Authentication. Developed a database
 ## Technologies Used
 - Framework: Python Django with Django Rest Framework
 - Database: PostgreSQL
-- Authentication: Google OAuth2 with OpenID Connect
+- Authentication: OIDC Oauth2 authentication using Django and mozilla-django-oidc with Okta
 - Africa’s Talking SMS Gateway
 
 ## Getting Started
@@ -38,7 +38,7 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 - Google OAuth2 Configuration:
-Set up the Google OAuth2 credentials in your project's settings
+Set up the Google Okta credentials in your project's settings
 
 - Run the Server
 ```
@@ -47,7 +47,7 @@ python manage.py runserver
 
 - Access the Application
 ```
-http://127.0.0.1:8000/
+http://127.0.0.1:8000/swagger
 ```
 - Testing
 Django's testing framework that makes it easy to create and 
@@ -70,10 +70,9 @@ Request Body: JSON object with customer details
 Headers: [{"key":"Content-Type","value":"application/json"]
 sample Body
 {
-  "customer": 1,
-  "item": "Spoon",
-  "amount": 50.00,
-  "time": "2024-02-12T12:00:00Z"
+  "name": "string",
+  "code": "string",
+  "phone_number": "string"
 }
 ```
 ### Create a New Customer
@@ -85,7 +84,8 @@ Headers: [{"key":"Content-Type","value":"application/json"]
 sample Body
 {
   "name": "John Doe",
-  "code": "JD001"
+  "code": "JD001", 
+  "phone
 }
 ```
 
@@ -116,10 +116,19 @@ sample Body
 ![Sample SMS Response in Africa’s Talking Simulator ](customers_orders/img/sms_test.png)
 
 
-
 ## Authentication and Authorization
 
-Explain how authentication and authorization work in my project.
+---
+> > OIDC authentication with Django and Okta
+--- 
+
+1. OpenID Connect (OIDC) is a protocol that allows a user to authenticate with a third-party service and then use that authentication to sign in to other services. OIDC is built on top of the OAuth2 protocol and adds an additional layer of authentication on top of it. This allows a user to not only grant permission for a service to access their data, but also to verify their identity.
+
+2. Okta is an identity and access management platform that enables organizations to securely connect users to technology. It supports the OIDC protocol, which allows users to be authenticated and receive information about their identity and access rights across different applications.
+
+3. ### Okta Customer Identity Cloud
+
+For seamless identity management and authentication create an app  using the [Okta Customer Identity Cloud](https://auth0.com/signup?utm_medium=referral&utm_source=okta&utm_campaign=okta-signup-referral-21-09-27&utm_content=signup&promo=sup&ocid=7014z000001cbvjAAA-aPA4z0000008OZeGAM&_gl=1*mwenf1*_gcl_au*MTkxMDM2MzcxNi4xNzA4NjA0NjY5*_ga*MjAxMTYyNTkwNC4xNzA4NjA0Njcw*_ga_QKMSDV5369*MTcwODYwNDY2OS4xLjAuMTcwODYwNDcxMi4xNy4wLjA.&_ga=2.81848534.1969795561.1708604670-2011625904.1708604670).
 
 
 ## CI/CD Pipeline
@@ -134,5 +143,4 @@ process, and health checks ensures its availability during the workflow
 Implemented Content Security Policy (Cross-Site Scripting(XSS) headers 
 to restrict the types of content that can be loaded on the web pages. 
 This can help prevent malicious script execution.
-
 

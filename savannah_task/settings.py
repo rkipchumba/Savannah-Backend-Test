@@ -1,19 +1,19 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-!1krs3+qkskbkqau)yom_%@k6+qn(5k9i&je!md@k-1ve5si7='
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', False)
 
 ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,37 +22,59 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'customers_orders',
-    'social_django'
+    'rest_framework',
+    'drf_yasg',
+    'mozilla_django_oidc' 
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
-
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.open_id_connect.OpenIdConnectAuth',
-    'django.contrib.auth.backends.ModelBackend'
-)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
 
-SOCIAL_AUTH_OPENIDCONNECT_KEY = '654541876298-m4upiusv9rjo88qmjvh4rtcvn8ng67tj.apps.googleusercontent.com'
-SOCIAL_AUTH_OPENIDCONNECT_SECRET = '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'
-SOCIAL_AUTH_OPENIDCONNECT_URL_AUTH = 'https://accounts.google.com/o/oauth2/auth'
-SOCIAL_AUTH_OPENIDCONNECT_URL_KEYSET = 'https://www.googleapis.com/oauth2/v3/certs'
-SOCIAL_AUTH_OPENIDCONNECT_URL_TOKEN = 'https://accounts.google.com/o/oauth2/token'
-SOCIAL_AUTH_OPENIDCONNECT_URL_USERINFO = 'https://www.googleapis.com/oauth2/v3/userinfo'
+        'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
-LOGIN_URL = 'login'
+
+OKTA_DOMAIN = os.getenv('OKTA_DOMAIN')
+OIDC_RP_CLIENT_ID = os.getenv('OIDC_RP_CLIENT_ID')
+OIDC_RP_CLIENT_SECRET = os.getenv('OIDC_RP_CLIENT_SECRET')
+OIDC_RP_SIGN_ALGO = "RS256"
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"https://{OKTA_DOMAIN}/authorize" # The OIDC authorization endpoint
+OIDC_OP_USER_ENDPOINT = f"https://{OKTA_DOMAIN}/userinfo" # The OIDC userinfo endpoint
+OIDC_OP_TOKEN_ENDPOINT = f"https://{OKTA_DOMAIN}/oauth/token" # The OIDC token endpoint
+OIDC_OP_JWKS_ENDPOINT = f"https://{OKTA_DOMAIN}/.well-known/jwks.json" # The OIDC JWKS endpoint
+
+LOGIN_URL='login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'swagger/'
+LOGOUT_REDIRECT_URL = 'swagger/'
+
+
+SWAGGER_SETTINGS = {
+    'LOGIN_URL': '/authorization-code/authenticate/',
+    'LOGOUT_URL': '/logout/'
+}
 
 ROOT_URLCONF = 'savannah_task.urls'
 
@@ -79,29 +101,13 @@ WSGI_APPLICATION = 'savannah_task.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rodgers',
-        'USER': 'rodgers',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', 5432),
     }
 }
-
-
-
-
-# Africa's Talking Gateway
-USERNAME = 'sandbox'
-API_KEY = 'e68a6ba30bff8ea7204421b6f805d0c44d0ebb957e966c8d812be5085aa377d3'
-
-
-"""
-To enhance the security of the application, including protection 
-against Cross-Site Scripting (XSS) attacks, restrict the types of 
-content that can be loaded on  web pages
-"""
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
 
 
 # Password validation
