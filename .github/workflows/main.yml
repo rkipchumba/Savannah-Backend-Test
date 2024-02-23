@@ -13,7 +13,7 @@ jobs:
     env:
       POSTGRES_USER: rodgers
       POSTGRES_PASSWORD: password
-      POSTGRES_HOST: localhost 
+      POSTGRES_HOST: localhost
       POSTGRES_DB: rodgers
       POSTGRES_PORT: 5432
 
@@ -46,18 +46,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Set up environment variables
+      - name: Set up environment variables from .env file
         run: |
-          echo "export SECRET_KEY=${{ "secrets.django-insecure-!1krs3+qkskbkqau)yom_%@k6+qn(5k9i&je!md@k-1ve5si7=" }}" >> $GITHUB_ENV
-          echo "export AFRICASTAKING_USERNAME=${{ secrets.AFRICASTAKING_USERNAME }}" >> $GITHUB_ENV
-          echo "export AFRICASTAKING_API_KEY=${{ secrets.AFRICASTAKING_API_KEY }}" >> $GITHUB_ENV
-          echo "export OKTA_DOMAIN=${{ secrets.OKTA_DOMAIN }}" >> $GITHUB_ENV
-          echo "export OIDC_RP_CLIENT_ID=${{ secrets.OIDC_RP_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "export OIDC_RP_CLIENT_SECRET=${{ secrets.OIDC_RP_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "export DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
-          echo "export POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> $GITHUB_ENV
-          echo "export POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> $GITHUB_ENV
-          echo "export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> $GITHUB_ENV
+          cp .env.example .env  # Assuming you have a .env.example file
+          source .env
+          echo "export SECRET_KEY=${SECRET_KEY}" >> $GITHUB_ENV
+          echo "export AFRICASTAKING_USERNAME=${AFRICASTAKING_USERNAME}" >> $GITHUB_ENV
+          echo "export AFRICASTAKING_API_KEY=${AFRICASTAKING_API_KEY}" >> $GITHUB_ENV
+          echo "export OKTA_DOMAIN=${OKTA_DOMAIN}" >> $GITHUB_ENV
+          echo "export OIDC_RP_CLIENT_ID=${OIDC_RP_CLIENT_ID}" >> $GITHUB_ENV
+          echo "export OIDC_RP_CLIENT_SECRET=${OIDC_RP_CLIENT_SECRET}" >> $GITHUB_ENV
+          echo "export DEBUG=${DEBUG}" >> $GITHUB_ENV
+          echo "export POSTGRES_USER=${POSTGRES_USER}" >> $GITHUB_ENV
+          echo "export POSTGRES_DB=${POSTGRES_DB}" >> $GITHUB_ENV
+          echo "export POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> $GITHUB_ENV
 
       - name: Run tests and coverage
         run: |
