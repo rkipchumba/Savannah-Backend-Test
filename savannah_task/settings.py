@@ -4,7 +4,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-!1krs3+qkskbkqau)yom_%@k6+qn(5k9i&je!md@k-1ve5si7=')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -101,12 +101,11 @@ WSGI_APPLICATION = 'savannah_task.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'rodgers'),
-        'USER': os.getenv('DB_USER', 'rodgers'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'password'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': int(os.getenv('DB_PORT', 5432)),
-
+        'PORT': os.getenv('DB_PORT', 5432),
     }
 }
 

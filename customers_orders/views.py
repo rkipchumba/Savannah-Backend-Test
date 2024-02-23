@@ -59,8 +59,9 @@ class OrderViewSet(viewsets.ModelViewSet):
         self.send_sms(phone_number, message)
 
     def send_sms(self, phone_number, message):
-        africastalking.initialize(os.getenv("AFRICASTAKING_USERNAME"), os.getenv('AFRICASTAKING_API_KEY'))
-        sms = africastalking.SMS 
+        africastalking.initialize(os.getenv('AFRICASTAKING_USERNAME'), os.getenv('AFRICASTAKING_API_KEY'))
+        sms = africastalking.SMS
+
 
         try:
             # Check if the phone number includes the country code
