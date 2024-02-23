@@ -4,6 +4,7 @@ import africastalking
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
+from datetime import datetime
 
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from django.contrib.auth.models import AnonymousUser
@@ -53,7 +54,8 @@ class OrderViewSet(viewsets.ModelViewSet):
         super().perform_create(serializer)
         order = serializer.instance
         customer = order.customer
-        order_time = order.time.strftime('%Y-%m-%d %H:%M')
+        current_time = datetime.now()
+        order_time = current_time.strftime('%Y-%m-%d %H:%M')
         message = f"Dear {customer.name}, your order with item {order.item} has been added successfully on {order_time}. Total amount is Ksh {order.amount}."
         phone_number = customer.phone_number
         self.send_sms(phone_number, message)
