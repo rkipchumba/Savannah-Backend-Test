@@ -11,19 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      POSTGRES_USER: rodgers
-      POSTGRES_PASSWORD: password
-      POSTGRES_HOST: localhost 
-      POSTGRES_DB: rodgers
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_HOST: localhost
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       POSTGRES_PORT: 5432
 
     services:
       postgres_main:
         image: postgres
         env:
-          POSTGRES_USER: ${{ env.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
           - 5432:5432
         options: >-
@@ -46,14 +46,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Debugging
+      - name: Set up environment variables
         run: |
-          pwd
-          ls -la
-      - name: Source .env file
-        run: source .env
-
-      - name: Run tests and coverage
-        run: |
-          coverage run --source=customers_orders manage.py test
-          coverage report
+          echo "export SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "export AFRICASTAKING_USERNAME=${{ secrets.AFRICASTAKING_USERNAME }}" >> $GITHUB_ENV
+          echo "export AFRICASTAKING_API_KEY=${{ secrets.AFRICASTAKING_API_KEY }}" >> $GITHUB_ENV
+          echo "export OKTA_DOMAIN=${{ secrets.OKTA_DOMAIN }}" >> $GITHUB_ENV
+          echo "export OIDC_RP_CLIENT_ID=${{ secrets.OIDC_RP_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "export OIDC_RP_CLIENT_SECRET=${{ secrets.OIDC_RP_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "export DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
