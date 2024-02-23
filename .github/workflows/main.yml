@@ -48,7 +48,7 @@ jobs:
 
       - name: Run tests and coverage
         run: |
-          source .env 
+          source .env || true 
           coverage run --source=customers_orders manage.py test
           coverage report
 
