@@ -101,11 +101,12 @@ WSGI_APPLICATION = 'savannah_task.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'NAME': os.getenv('DB_NAME', 'rodgers'),
+        'USER': os.getenv('DB_USER', 'rodgers'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'password'),
         'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', 5432),
+        'PORT': int(os.getenv('DB_PORT', 5432)),
+
     }
 }
 
