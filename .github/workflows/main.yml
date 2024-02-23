@@ -48,7 +48,7 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "export SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "export SECRET_KEY=${{ secrets.django-insecure-!1krs3+qkskbkqau)yom_%@k6+qn(5k9i&je!md@k-1ve5si7= }}" >> $GITHUB_ENV
           echo "export AFRICASTAKING_USERNAME=${{ secrets.AFRICASTAKING_USERNAME }}" >> $GITHUB_ENV
           echo "export AFRICASTAKING_API_KEY=${{ secrets.AFRICASTAKING_API_KEY }}" >> $GITHUB_ENV
           echo "export OKTA_DOMAIN=${{ secrets.OKTA_DOMAIN }}" >> $GITHUB_ENV
