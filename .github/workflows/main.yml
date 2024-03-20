@@ -61,4 +61,5 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pytest --cov-report term-missing --cov=.
+          coverage run manage.py test
+          coverage report -m
