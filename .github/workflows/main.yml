@@ -58,3 +58,7 @@ jobs:
           echo "export OIDC_RP_CLIENT_ID=${{ secrets.OIDC_RP_CLIENT_ID }}" >> $GITHUB_ENV
           echo "export OIDC_RP_CLIENT_SECRET=${{ secrets.OIDC_RP_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "export DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
+
+      - name: Run tests with coverage
+        run: |
+          pytest --cov-report term-missing --cov=.

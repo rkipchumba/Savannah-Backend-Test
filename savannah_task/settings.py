@@ -46,7 +46,7 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
 
-        'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+        # 'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),

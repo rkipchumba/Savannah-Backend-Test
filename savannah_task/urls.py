@@ -14,7 +14,7 @@ from django.contrib.auth.views import LogoutView
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Snippets API",
+      title="Customers | Orders API",
       default_version='v1',
       description="Test description",
       terms_of_service="https://www.google.com/policies/terms/",
@@ -38,6 +38,6 @@ urlpatterns = [
    
    path('admin/', admin.site.urls),
 
-   # API URLs
+   # API URLs from another Django app
    path('api/', include('customers_orders.urls')),
 ]

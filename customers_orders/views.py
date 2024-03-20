@@ -22,6 +22,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
+    # create method to handle the creation of new customers
     def create(self, request, *args, **kwargs):
         # Check if the user is authenticated
         if not request.user or isinstance(request.user, AnonymousUser):
@@ -84,4 +85,5 @@ class OrderViewSet(viewsets.ModelViewSet):
         except ValueError as e:
             # Handle the ValueError (Invalid phone number) gracefully
             logging.error("Error sending SMS: %s", e)
+
 
