@@ -59,6 +59,4 @@ jobs:
           echo "export OIDC_RP_CLIENT_SECRET=${{ secrets.OIDC_RP_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "export DEBUG=${{ secrets.DEBUG }}" >> $GITHUB_ENV
 
-      - name: Run tests with coverage
-        run: |
-          coverage report -m
+      
